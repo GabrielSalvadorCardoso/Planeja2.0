@@ -1,4 +1,6 @@
 package classes;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 public class TelaPlaneja extends javax.swing.JFrame {
     private Conta conta;
@@ -391,7 +393,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
         //Os controles do painel de cadastramento são DESABILITADOS        
         cadDesabilita();
         
-        //Os valores(que estavam nas caixas de texto) são gravadas em um arquivo
+        //Os valores(que estavam nas caixas de texto) são gravadas no banco de dados
         //ver classe 'Conta.java'
         conta.record();
     }//GEN-LAST:event_btnEnviarActionPerformed
@@ -412,15 +414,30 @@ public class TelaPlaneja extends javax.swing.JFrame {
         conta = new Conta(0, null, null, 0, null);
         
         spAnos.setEnabled(true);
+
+        ResultSet res = conta.search(Integer.parseInt(num));        
+        try{
+            res.next();
+            this.showCod.setText(Integer.toString(res.getInt("numero")));
+            this.showBanco.setText(res.getNString("banco"));
+            this.showDono.setText(res.getString("proprietario"));
+            this.showValor.setText(Float.toString(res.getFloat("valor")));
+            this.showData.setText((res.getDate("data")+""));            
+        }catch(SQLException ex){
+             System.out.println("Erro ao executar o SELECT");
+        }
+        try{
+            res.close();
+        }catch(SQLException ex){
+            System.out.println("Erro ao fechar ResultSet desta classe");
+        }
         
-        conta.search(Integer.parseInt(num));        
-        
-        showCod.setText(conta.retornarValor(0));
+        conta.closeConnections();
+        /*showCod.setText(conta.retornarValor(0));
         showBanco.setText(conta.retornarValor(1));
         showDono.setText(conta.retornarValor(2));
         showValor.setText(conta.retornarValor(3));
-        showData.setText(conta.retornarValor(4));
-        
+        showData.setText(conta.retornarValor(4));*/       
                 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -521,6 +538,23 @@ public class TelaPlaneja extends javax.swing.JFrame {
         btnBuscar.setEnabled(false);
         //spAnos.setEnabled(false);
     }
+
+    //setters
+    /*public void setShowBanco(String banco){
+        this.showBanco.setText(banco);
+    }
+    public void setShowCod(int codigo){
+        this.showCod.setText(Integer.toString(codigo));
+    }
+    public void setShowDono(String dono){
+        this.showDono.setText(dono);
+    }
+    public void setShowValor(float valor){
+        this.showValor.setText(Float.toString(valor));
+    }
+    public void setShowData(String data){
+        this.showData.setText(data);
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
