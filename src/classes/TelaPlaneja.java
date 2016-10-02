@@ -1,6 +1,8 @@
 package classes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class TelaPlaneja extends javax.swing.JFrame {
     private Conta conta;
@@ -19,6 +21,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
         initComponents();
         cadHabilita();
         buscaDesabilita();
+        altDesabilita();
         ctrlGiratorio(false);//controle geiratorio que indica anos
     }
 
@@ -60,8 +63,21 @@ public class TelaPlaneja extends javax.swing.JFrame {
         painelNav = new javax.swing.JPanel();
         btnCadastrar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        p4 = new javax.swing.JPanel();
+        p3 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txtAltCod = new javax.swing.JTextField();
+        txtAltBanco = new javax.swing.JTextField();
+        txtAltDono = new javax.swing.JTextField();
+        txtAltValor = new javax.swing.JTextField();
+        btnAltBuscar = new javax.swing.JButton();
+        btnAltAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -77,17 +93,27 @@ public class TelaPlaneja extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Codigo da Conta");
 
+        txtCod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Banco");
+
+        txtBanco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Proprietario");
 
+        txtDono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Valor");
 
+        txtValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Data");
+
+        txtData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Cadastramento de Conta");
@@ -317,7 +343,12 @@ public class TelaPlaneja extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Alterar");
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Excluir");
 
@@ -330,7 +361,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -339,8 +370,122 @@ public class TelaPlaneja extends javax.swing.JFrame {
             painelNavLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
             .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout p4Layout = new javax.swing.GroupLayout(p4);
+        p4.setLayout(p4Layout);
+        p4Layout.setHorizontalGroup(
+            p4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 257, Short.MAX_VALUE)
+        );
+        p4Layout.setVerticalGroup(
+            p4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Alteração de Conta");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Codigo da Conta");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Banco");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Proprietario");
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setText("Valor");
+
+        txtAltCod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAltCod.setText("0");
+
+        txtAltBanco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAltBanco.setText("<none>");
+
+        txtAltDono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAltDono.setText("<none>");
+
+        txtAltValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtAltValor.setText("<null>");
+
+        btnAltBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAltBuscar.setText("BUSCAR");
+        btnAltBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltBuscarActionPerformed(evt);
+            }
+        });
+
+        btnAltAlterar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAltAlterar.setText("ALTERAR");
+        btnAltAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltAlterarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout p3Layout = new javax.swing.GroupLayout(p3);
+        p3.setLayout(p3Layout);
+        p3Layout.setHorizontalGroup(
+            p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p3Layout.createSequentialGroup()
+                .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p3Layout.createSequentialGroup()
+                        .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(p3Layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(btnAltBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAltAlterar))
+                            .addGroup(p3Layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(jLabel12)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(p3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel19))
+                        .addGap(26, 26, 26)
+                        .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtAltValor)
+                            .addComponent(txtAltDono)
+                            .addComponent(txtAltBanco)
+                            .addComponent(txtAltCod))))
+                .addContainerGap())
+        );
+        p3Layout.setVerticalGroup(
+            p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(p3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtAltCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtAltBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtAltDono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtAltValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(p3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAltBuscar)
+                    .addComponent(btnAltAlterar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -350,6 +495,10 @@ public class TelaPlaneja extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(p3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(p4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(painelNav, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(p1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -361,10 +510,14 @@ public class TelaPlaneja extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(painelNav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(p4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(p3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -419,7 +572,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
         try{
             res.next();
             this.showCod.setText(Integer.toString(res.getInt("numero")));
-            this.showBanco.setText(res.getNString("banco"));
+            this.showBanco.setText(res.getString("banco"));
             this.showDono.setText(res.getString("proprietario"));
             this.showValor.setText(Float.toString(res.getFloat("valor")));
             this.showData.setText((res.getDate("data")+""));            
@@ -432,7 +585,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
             System.out.println("Erro ao fechar ResultSet desta classe");
         }
         
-        conta.closeConnections();
+        conta.consultaCloseConnections();
         /*showCod.setText(conta.retornarValor(0));
         showBanco.setText(conta.retornarValor(1));
         showDono.setText(conta.retornarValor(2));
@@ -448,18 +601,20 @@ public class TelaPlaneja extends javax.swing.JFrame {
         txtDono.setText("");
         txtValor.setText("");
     }//GEN-LAST:event_btnLimparActionPerformed
-
+    //Botão de Navegação: CADASTRAR
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         /*'btnCadastrar' habilita as funções do painel de cadastro e desabilita
         as funções dos outros paineis*/        
         cadHabilita();
         buscaDesabilita();
         ctrlGiratorio(false);
+        altDesabilita();
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
+    //Botão de Navegação: CONSULTA
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         cadDesabilita();
         buscaHabilita();
+        altDesabilita();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void spAnosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spAnosStateChanged
@@ -475,6 +630,50 @@ public class TelaPlaneja extends javax.swing.JFrame {
         lblEstimativa.setText(Float.toString(estimativa));
         //RELEMBRANDO: TODA VEZ QUE O CONTROLE GIRATORIO É ACIONADO O CALCULO É REFEITO
     }//GEN-LAST:event_spAnosStateChanged
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        //altHabilita();
+        cadDesabilita();
+        buscaDesabilita();
+        ctrlGiratorio(false);
+        
+        //txtAltCod será usado para consulta por isso não será desabilitado        
+        txtAltCod.setEnabled(true);
+        btnAltBuscar.setEnabled(true);
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnAltBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltBuscarActionPerformed
+        String num = txtAltCod.getText();
+        conta = new Conta(0, null, null, 0, null);
+        ResultSet res = conta.search(Integer.parseInt(num));
+
+        try {       
+            res.next();
+            txtAltCod.setText(Integer.toString(res.getInt("numero")));
+            txtAltBanco.setText(res.getString("banco"));
+            txtAltDono.setText(res.getString("proprietario"));
+            txtAltValor.setText(Integer.toString(res.getInt("valor")));
+        } catch (SQLException ex) {
+            System.out.println("Erro ao executar SELECT");
+        }
+        
+        try{
+            res.close();
+        }catch(SQLException ex){
+            System.out.println("Impossivel fechar ResultSet");
+        }
+        conta.consultaCloseConnections();//é muito importante fechar todas as conexões quando terminar a operação
+        altHabilita();
+    }//GEN-LAST:event_btnAltBuscarActionPerformed
+
+    private void btnAltAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltAlterarActionPerformed
+        conta = new Conta(Integer.parseInt(txtAltCod.getText()),txtAltBanco.getText(),
+                txtAltDono.getText(),Float.parseFloat(txtAltValor.getText()),"2016-10-02");
+        String op = JOptionPane.showInputDialog(null, "Deseja confirmar alterações? [s - sim | n - Não]");
+        if(op.equals("s") || op.equals("sim") || op.equals("S") || op.equals("SIM") || op.equals("Sim")){
+            conta.alter();
+        }
+    }//GEN-LAST:event_btnAltAlterarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -512,6 +711,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
         this.spAnos.setEnabled(status);
     }
     
+    //painel cadastro
     void cadHabilita(){
         txtCod.setEnabled(true);
         txtBanco.setEnabled(true);
@@ -530,6 +730,7 @@ public class TelaPlaneja extends javax.swing.JFrame {
         btnEnviar.setEnabled(false);
         btnLimpar.setEnabled(false);
     }
+    //painel de busca
     void buscaHabilita(){
         btnBuscar.setEnabled(true);
         //spAnos.setEnabled(true);
@@ -538,38 +739,47 @@ public class TelaPlaneja extends javax.swing.JFrame {
         btnBuscar.setEnabled(false);
         //spAnos.setEnabled(false);
     }
+    //painel de alteração
+    void altHabilita(){
+        txtAltCod.setEnabled(true);
+        txtAltBanco.setEnabled(true);
+        txtAltDono.setEnabled(true);
+        txtAltValor.setEnabled(true);
+        btnAltAlterar.setEnabled(true);
+        btnAltBuscar.setEnabled(true);
+        
+    }
+    void altDesabilita(){
+        txtAltCod.setEnabled(false);
+        txtAltBanco.setEnabled(false);
+        txtAltDono.setEnabled(false);
+        txtAltValor.setEnabled(false);
+        btnAltAlterar.setEnabled(false);
+        btnAltBuscar.setEnabled(false);
+    }
 
-    //setters
-    /*public void setShowBanco(String banco){
-        this.showBanco.setText(banco);
-    }
-    public void setShowCod(int codigo){
-        this.showCod.setText(Integer.toString(codigo));
-    }
-    public void setShowDono(String dono){
-        this.showDono.setText(dono);
-    }
-    public void setShowValor(float valor){
-        this.showValor.setText(Float.toString(valor));
-    }
-    public void setShowData(String data){
-        this.showData.setText(data);
-    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAltAlterar;
+    private javax.swing.JButton btnAltBuscar;
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnLimpar;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -581,6 +791,8 @@ public class TelaPlaneja extends javax.swing.JFrame {
     private javax.swing.JLabel lblEstimativa;
     private javax.swing.JPanel p1;
     private javax.swing.JPanel p2;
+    private javax.swing.JPanel p3;
+    private javax.swing.JPanel p4;
     private javax.swing.JPanel painelNav;
     private javax.swing.JLabel showBanco;
     private javax.swing.JLabel showCod;
@@ -588,6 +800,10 @@ public class TelaPlaneja extends javax.swing.JFrame {
     private javax.swing.JLabel showDono;
     private javax.swing.JLabel showValor;
     private javax.swing.JSpinner spAnos;
+    private javax.swing.JTextField txtAltBanco;
+    private javax.swing.JTextField txtAltCod;
+    private javax.swing.JTextField txtAltDono;
+    private javax.swing.JTextField txtAltValor;
     private javax.swing.JTextField txtBanco;
     private javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtData;

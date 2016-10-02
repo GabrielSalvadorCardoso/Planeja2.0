@@ -29,8 +29,8 @@ public class Conta {
     private Scanner ler;
     private String texto[] = {"","","","",""};
     //conexões de consulta
-    private Connection con_consulta = null;
-    private PreparedStatement stm_consulta = null;
+    private Connection con = null;
+    private PreparedStatement stm = null;
     private ResultSet res = null;
 
     Conta(int code, String bank, String owner, float value, String date){
@@ -45,7 +45,6 @@ public class Conta {
     public int getCod() {
         return cod;
     }
-
     public void setCod(int cod) {
         this.cod = cod;
     }
@@ -53,7 +52,6 @@ public class Conta {
     public String getBanco() {
         return banco;
     }
-
     public void setBanco(String banco) {
         this.banco = banco;
     }
@@ -61,7 +59,6 @@ public class Conta {
     public String getDono() {
         return dono;
     }
-
     public void setDono(String dono) {
         this.dono = dono;
     }
@@ -69,7 +66,6 @@ public class Conta {
     public float getValor() {
         return valor;
     }
-
     public void setValor(float valor) {
         this.valor = valor;
     }
@@ -77,7 +73,6 @@ public class Conta {
     public String getData() {
         return data;
     }
-
     public void setData(String data) {
         this.data = data;
     }
@@ -85,7 +80,6 @@ public class Conta {
     public int getAnos() {
         return anos;
     }
-
     public void setAnos(int anos) {
         this.anos = anos;
     }
@@ -93,10 +87,10 @@ public class Conta {
     public float getEstimativa() {
         return estimativa;
     }
-
     public void setEstimativa(float estimativa) {
         this.estimativa = estimativa;
     }
+    
     //metodos de comportaento
     void estado(){
         System.out.println("Dados da conta");
@@ -106,58 +100,6 @@ public class Conta {
         System.out.println("Valor atual: "+this.getValor()+" ("+this.getData()+")");
         System.out.println("Estimativa: "+this.getEstimativa()+" (em "+this.getAnos()+"ano(s)");
     }
-    //criação e escrita do arquivo
-    /*void record(){
-        dir = new File("C://Planeja//Contas");
-        dir.mkdirs();
-        
-        try{
-            arquivo = new Formatter("C://Planeja//Contas//"+this.getCod()+".txt");
-        }catch(FileNotFoundException e){
-            JOptionPane.showMessageDialog(null, "Diretório inacessivel");
-        }
-        
-        try{
-            arquivo.format(this.getCod()+"\r\n"+
-                    this.getBanco()+"\r\n"+
-                    this.getDono()+"\r\n"+
-                    this.getValor()+"\r\n"+
-                    this.getData());
-        }catch(FormatterClosedException ex){
-            JOptionPane.showMessageDialog(null, "Arquivo não acessivel");
-        }
-        
-        arquivo.close();
-    }
-    //leitura do conteudo do arquivo
-    void search(int num){
-        try {
-            ler = new Scanner(new File("C://Planeja//Contas//"+num+".txt"));
-            //System.out.println("ESTAGIO 1");
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Arquivo não encontrado");
-            System.exit(1);
-        }
-        
-        try{
-            //System.out.println("ESTAGIO 2");
-            for(int cont=0; ler.hasNext(); cont++){
-                texto[cont] = ler.nextLine();
-            }
-        }catch(NoSuchElementException s){
-                JOptionPane.showMessageDialog(null, "Tipo de entrada diferente da esperada");
-                System.exit(1);
-        }
-        //System.out.println(texto[0]+texto[1]+texto[2]+texto[3]+texto[4]);
-        //System.out.println("ESTAGIO 3");
-        ler.close();
-    }    
-    String retornarValor(int cont){
-        return texto[cont];
-    }*/
-    
-    
-    
     
     //////////////////////////////////////////BANCO DE DADOS////////////////////
     //GRAVAÇÃO
@@ -191,27 +133,52 @@ public class Conta {
         }
     }
     //CONSULTA
-    public ResultSet search(int numero){
-        con_consulta = new ConnectionFactory().getConnection("planeja","root","");
+    public ResultSet search(int numero){        
+        con = new ConnectionFactory().getConnection("planeja","root","");
         String sql = "select * from conta where numero="+numero;
-        stm_consulta = new PreparaDeclaracao().statement(con_consulta, sql);       
+        stm = new PreparaDeclaracao().statement(con, sql);       
         
         try {
-            res = stm_consulta.executeQuery();
+            res = stm.executeQuery();
         } catch (SQLException ex) {
             System.out.println("Não foi possivel executar Query");
-        }
-        
+        }      
         return res;
     }
     
-    public void closeConnections(){
+    public void consultaCloseConnections(){
         try{
-           this.con_consulta.close();
-           this.stm_consulta.close();
+           this.con.close();
+           this.stm.close();
            this.res.close(); 
         }catch(SQLException ex){
             System.out.println("Não foi possivel fechar connexões de consulta");
-        }        
+        }
+    }
+    
+    //ALTERAÇÃO
+    public void alter(){
+    /*String teste = "update conta set banco='Bradesco', proprietario='José da SIlva',
+    valor='20000', data='2016-10-02' where numero=11111";*/
+        con = new ConnectionFactory().getConnection("planeja", "root", "");
+        String sql = "update conta set banco='"+this.getBanco()+
+                "', proprietario='"+this.getDono()+
+                "', valor='"+this.getValor()+
+                "', data='2016-10-02' "+                
+                "where numero="+this.getCod();
+        stm = new PreparaDeclaracao().statement(con, sql);
+        
+        try {
+            stm.execute();
+        } catch (SQLException ex) {
+            System.out.println("Não foi possivel executar UPDATE");
+        }
+        
+        try{
+            stm.close();
+            con.close();
+        }catch(SQLException ex){
+            System.out.println("Impossivel fechar conexão");
+        }
     }
 }
